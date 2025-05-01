@@ -1,5 +1,5 @@
 import {Text, View, Image, FlatList, ActivityIndicator} from "react-native";
-import React from "react";
+import React, {useEffect, useState} from "react";
 import {images} from "@/constants/images";
 import MovieCard from "@/components/MovieCard";
 import {useRouter} from "expo-router";
@@ -7,18 +7,33 @@ import useFetch from "@/services/useFetch";
 import {fetchMovies} from "@/services/api";
 import {icons} from "@/constants/icons";
 import SearchBar from "@/components/SearchBar";
+import {falseTag} from "yaml/dist/schema/yaml-1.1/bool";
+import {text} from "node:stream/consumers";
 
 const Search = () => {
 
-
+    const [searchQuery, setSearchQuery] = useState('')
 
     const {
         data: movies,
         loading,
-        error
+        error,
+        refetch: loadMovies,
+        reset
     } = useFetch(() => fetchMovies({
-        query: ''
-    }))
+        query: searchQuery
+    }), false)
+
+    useEffect(() => {
+        const func = async () => {
+            if (searchQuery.trim()) {
+                await loadMovies();
+            } else {
+                reset()
+            }
+        }
+        func();
+    }, [searchQuery]);
 
     return (
         <View className="flex-1 bg-primary">
@@ -44,7 +59,11 @@ const Search = () => {
                         </View>
 
                         <View className={"my-5"}>
-                            <SearchBar placeholder="Search movie..."/>
+                            <SearchBar
+                                placeholder="Search movie..."
+                                value={searchQuery}
+                                onChangeText={(text: string)=> setSearchQuery(text)}
+                            />
                         </View>
 
                         {loading && (
@@ -57,10 +76,10 @@ const Search = () => {
                             </Text>
                         )}
 
-                        {!loading && !error && 'SEARCH TERM'.trim() && movies?.length > 0 && (
+                        {!loading && !error && searchQuery.trim() && movies?.length > 0 && (
                             <Text className="text-xl text-white font-bold">
                                 Search Results for{''}
-                                <Text className="text-accent">SEARCH TERM</Text>
+                                <Text className="text-accent">{searchQuery}</Text>
                             </Text>
                         )}
                     </>

@@ -7,7 +7,6 @@ import useFetch from "@/services/useFetch";
 import {fetchMovies} from "@/services/api";
 import {icons} from "@/constants/icons";
 import SearchBar from "@/components/SearchBar";
-import {falseTag} from "yaml/dist/schema/yaml-1.1/bool";
 import {text} from "node:stream/consumers";
 
 const Search = () => {
@@ -20,9 +19,7 @@ const Search = () => {
         error,
         refetch: loadMovies,
         reset
-    } = useFetch(() => fetchMovies({
-        query: searchQuery
-    }), false)
+    } = useFetch(() => fetchMovies({query: searchQuery}), false)
 
     useEffect(() => {
         const func = async () => {

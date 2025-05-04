@@ -24,7 +24,7 @@ const Search = () => {
 
     useEffect(() => {
 
-        const timeoutId = setTimeout ( async () => {
+        const timeoutId = setTimeout(async () => {
             if (searchQuery.trim()) {
                 await loadMovies();
 
@@ -37,14 +37,14 @@ const Search = () => {
     }, [searchQuery]);
 
     useEffect(() => {
-        if(movies?.length > 0 && movies?.[0]) {
+        if (movies?.length > 0 && movies?.[0]) {
             updateSearchCount(searchQuery, movies[0]);
         }
     }, [movies]);
 
     return (
         <View className="flex-1 bg-primary">
-            <Image source={images.bg} className="flex-1 absolute w-full z-0" resizeMode="cover" />
+            <Image source={images.bg} className="flex-1 absolute w-full z-0" resizeMode="cover"/>
             <FlatList
                 data={movies}
                 renderItem={({item}) => <MovieCard {...item}/>}
@@ -57,24 +57,24 @@ const Search = () => {
                     marginVertical: 16
                 }}
                 contentContainerStyle={{
-                    paddingBottom:100
+                    paddingBottom: 100
                 }}
                 ListHeaderComponent={
                     <>
                         <View className="w-full flex-row justify-center items-center mt-20">
-                            <Image source={icons.logo} className="w-12 h-10" />
+                            <Image source={icons.logo} className="w-12 h-10"/>
                         </View>
 
                         <View className={"my-5"}>
                             <SearchBar
                                 placeholder="Search movie..."
                                 value={searchQuery}
-                                onChangeText={(text: string)=> setSearchQuery(text)}
+                                onChangeText={(text: string) => setSearchQuery(text)}
                             />
                         </View>
 
                         {loading && (
-                            <ActivityIndicator size="large" color="#000ff" className="my-3" />
+                            <ActivityIndicator size="large" color="#000ff" className="my-3"/>
                         )}
 
                         {error && (

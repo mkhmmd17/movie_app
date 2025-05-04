@@ -12,7 +12,7 @@ const client = new Client()
 
 const database = new Databases(client);
 
-export const updateSearchCount = async(query: string, movie: Movie) => {
+export const updateSearchCount = async (query: string, movie: Movie) => {
 
     try {
         const result = await database.listDocuments(DATABASE_ID, COLLECTION_ID, [
@@ -49,7 +49,7 @@ export const updateSearchCount = async(query: string, movie: Movie) => {
     }
 }
 
-export const getTrendingMovies = async(): Promise<TrendingMovie[] | undefined> => {
+export const getTrendingMovies = async (): Promise<TrendingMovie[] | undefined> => {
     try {
         const result = await database.listDocuments(DATABASE_ID, COLLECTION_ID, [
             Query.limit(5),

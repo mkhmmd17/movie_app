@@ -4,7 +4,7 @@ import {Link} from "expo-router";
 import MaskedView from "@react-native-masked-view/masked-view";
 import {images} from "@/constants/images";
 
-const TrendingCard = ({movie : {movie_id, title, poster_url}, index} : TrendingCardProps) => {
+const TrendingCard = ({movie: {movie_id, title, poster_url}, index}: TrendingCardProps) => {
     return (
         <Link href={`/movies/${movie_id}`} asChild>
             <TouchableOpacity className="w-32 relative pl-5">

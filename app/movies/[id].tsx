@@ -66,10 +66,19 @@ const MovieDetails = () => {
                     </View>
                 </View>
             </ScrollView>
-            <TouchableOpacity className="absolute bottom-5 left-0 right-0 mx-5 bg-accent rounded-lg py-3.5 flex flex-row items-center justify-center z-50" onPress={router.back}>
-                <Image source={icons.arrow} className="size-5 mr-1 mt-0.5 rotate-180" tintColor="#fff"/>
-                <Text className="text-white font-semibold text-base">Go back</Text>
-            </TouchableOpacity>
+            <View className="absolute flex flex-row bottom-5 gap-x-2 z-50 left-0 right-0 mx-5">
+                <TouchableOpacity className="flex-1 bg-accent rounded-lg py-3.5 flex flex-row items-center justify-center z-50" onPress={router.back}>
+                    <Image source={icons.arrow} className="size-5 mr-1 mt-0.5 rotate-180" tintColor="#fff"/>
+                    <Text className="text-white font-semibold text-base">Go back</Text>
+                </TouchableOpacity>
+                <TouchableOpacity className="bg-accent flex-1 items-center justify-center z-50 rounded-lg flex-row right-0" onPress={()=> {
+                    console.log(`Saved movie ${movie?.title}`)
+                }}>
+                    <Image source={icons.save} className="size-5 mr-1 mt-0.5"  tintColor="#fff"/>
+                    <Text className="text-white font-semibold text-base">Save</Text>
+                </TouchableOpacity>
+            </View>
+
         </View>
     )
 }

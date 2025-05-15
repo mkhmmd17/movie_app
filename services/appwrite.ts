@@ -1,6 +1,6 @@
 //track searches made by a user
 
-import {Client, Databases, ID, Query} from "appwrite";
+import {Client, Databases, ID, Query, Account} from "appwrite";
 
 const DATABASE_ID = process.env.EXPO_PUBLIC_APPWRITE_DATABASE_ID!;
 const COLLECTION_ID = process.env.EXPO_PUBLIC_APPWRITE_COLLECTION_ID!;
@@ -11,6 +11,32 @@ const client = new Client()
 
 
 const database = new Databases(client);
+const account = new Account(client);
+export { database, account, ID, Query}
+//Auth methods
+
+export const createAccount = async (email: string, password: string, name: string) => {
+    return await account.create(ID.unique(), email, password, name);
+}
+
+export const login = async (email: string, password: string) => {
+    return await account.createEmailPasswordSession(email, password);
+}
+
+export const getCurrentUser = async () => {
+    try {
+        return await account.get();
+    } catch (err: any)  {
+        if (err.code === 401 || err.message?.contain('Missing scope')) {
+            return null
+        }
+        throw err;
+    }
+}
+
+export const logout = async() => {
+    return await account.deleteSessions();
+}
 
 export const updateSearchCount = async (query: string, movie: Movie) => {
 

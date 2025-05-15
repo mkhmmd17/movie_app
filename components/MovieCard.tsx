@@ -1,21 +1,22 @@
-import {View, Text, TouchableOpacity, Image, TextInput} from 'react-native'
+import {View, Text, TouchableOpacity, Image} from 'react-native'
 import React from 'react'
 import {Link} from "expo-router";
 import {icons} from "@/constants/icons";
 
-const MovieCard = ({id, title, poster_path, vote_average, release_date, original_language} : Movie) => {
+interface MovieCardProps extends Movie {
+    onPress?: () => void;
+}
 
-    console.log({poster_path})
+const MovieCard = ({id, title, poster_path, vote_average, release_date, onPress}: MovieCardProps) => {
     return (
         <Link href={`/movies/${id}`} asChild>
-            <TouchableOpacity className="w-[30%]">
+            <TouchableOpacity className="w-[30%]" onPress={onPress}>
                 <Image
                     source={{
                         uri: poster_path
                             ? `https://image.tmdb.org/t/p/w500${poster_path}`
                             : `https://placehold.co/600x400/1a1a/ffffff.png`
                     }}
-
                     className="w-full h-52 rounded-lg"
                     resizeMode="cover"
                 />
@@ -34,7 +35,6 @@ const MovieCard = ({id, title, poster_path, vote_average, release_date, original
             </TouchableOpacity>
         </Link>
     );
-
 }
 
 export default MovieCard

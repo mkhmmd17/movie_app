@@ -1,14 +1,27 @@
-import { Text, View, Image } from "react-native";
+import { Text, View, Image, Button} from "react-native";
+import {useRouter} from "expo-router";
 import React from "react";
 import {icons} from "@/constants/icons";
+import {logout} from "@/services/appwrite";
 
 const Profile = () => {
+
+    const router = useRouter();
+
+    const handleLogout = async () => {
+        try {
+            await logout();
+            router.replace("/(auth)/login");
+            console.log("Logout");
+        } catch (err) {
+            console.log(err);
+        }
+
+    }
+
     return (
-        <View className="bg-primary flex-1 px-10">
-            <View className="flex justify-center items-center flex-1 flex-col gap-5">
-                <Image source={icons.person} className="size-10" tintColor="#fff" />
-                <Text className="text-gray-500 text-base">Profile</Text>
-            </View>
+        <View className="flex-1 justify-center items-center">
+            <Button title="Logout" onPress={handleLogout} />
         </View>
     )
 }

@@ -74,6 +74,7 @@ export default function Index() {
                 </Text>
                 <FlatList
                     horizontal
+                    ItemSeparatorComponent={() => <View className="w-4"/>}
                     data={trendingMovies}
                     renderItem={({ item, index }) => (
                         <TrendingCard movie={item} index={index} />
@@ -97,3 +98,6 @@ export default function Index() {
         </View>
     );
 }
+
+
+//need to fix the search + profile page + createuser page + fix number of trending movies + tab bar not pressable

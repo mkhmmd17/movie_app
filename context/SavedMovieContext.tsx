@@ -32,7 +32,7 @@ export const SavedMovieProvider = ({children} : {children: React.ReactNode}) => 
         try {
             const savedMovieJson = await AsyncStorage.getItem(STORAGE_KEY);
             if (savedMovieJson) {
-                setSavedMovies(JSON.parse(savedMovieJson));
+                setSavedMovies(JSON.parse(savedMovieJson)); //?
             }
         } catch (error) {
             console.error(`Error loading SavedMovies. Error is : ${error}`);
@@ -42,9 +42,9 @@ export const SavedMovieProvider = ({children} : {children: React.ReactNode}) => 
     const saveMovie = async (movie: Movie) => {
         try {
             const newSavedMovies = [...savedMovies];
-            if(!newSavedMovies.some(m => m.id === movie.id)) {
+            if(!newSavedMovies.some(m => m.id === movie.id)) { //?
                 newSavedMovies.push(movie);
-                setSavedMovies(newSavedMovies); //? setSavedMovies = newSavedMovies
+                setSavedMovies(newSavedMovies); //? setSavedMovies is a function
                 await AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(newSavedMovies)); //?
             }
         } catch (error) {
@@ -54,7 +54,7 @@ export const SavedMovieProvider = ({children} : {children: React.ReactNode}) => 
 
     const removeMovie = async (movieId: number) => {
         try {
-            const newSavedMovies = savedMovies.filter(m => m.id !== movieId);
+            const newSavedMovies = savedMovies.filter(m => m.id !== movieId); //?
             setSavedMovies(newSavedMovies);
             await AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(newSavedMovies));
         } catch(error) {
@@ -66,6 +66,7 @@ export const SavedMovieProvider = ({children} : {children: React.ReactNode}) => 
         return savedMovies.some(m => m.id === movieId);
     }
 
+    // Collect states and functions pass it to the childrens
     return (
         <SavedMovieContext.Provider value={{ savedMovies, saveMovie, removeMovie, isMovieSaved}}>
             {children}
